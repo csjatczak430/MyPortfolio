@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Caleb Jatczak, Nuclear Engineering student at UW Madison: vacuum, plasma and fabrication projects.">
+<title>Caleb Jatczak</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap">
+<style>
+:root { color-scheme: light; }
+[hidden] { display: none !important; }
+
+/* Layout: sticky "See my work!" button bar, a navy hero with name, photo box and About me,
+   then skills by category, then one block per project: title box + intro,
+   numbered photo row, numbered captions, what I did. */
+:root {
+  --font: "Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --max: 1112px;
+  --bg: #e8f1f8;
+  --surface: #f6fafd;
+  --ink: #0d1f33;
+  --ink-soft: #3d546b;
+  --line: #bfd3e4;
+  --chip: #dbe8f4;
+  --accent: #2457d6;
+  --cyan: #3fd0f0;
+  --amber: #f5a524;
+  --band: #0a1f35;
+  --hero: #0e2a47;
+  --band-ink: #ffffff;
+  --band-soft: #b9d2e6;
+  --todo-bg: #fff0cf;
+  --todo-ink: #7a4b00;
+  --group: #2457d6;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0b1a2b; --surface: #11263d; --ink: #e6f0f8; --ink-soft: #a9c0d3; --line: #25405c; --chip: #1a3552;
+    --accent: #7aa2ff; --band: #06111d; --hero: #0b2036; --todo-bg: #3a2c0a; --todo-ink: #ffd37a; --group: #173f86;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0b1a2b; --surface: #11263d; --ink: #e6f0f8; --ink-soft: #a9c0d3; --line: #25405c; --chip: #1a3552;
+  --accent: #7aa2ff; --band: #06111d; --hero: #0b2036; --todo-bg: #3a2c0a; --todo-ink: #ffd37a; --group: #173f86;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.6 var(--font); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--band); }
+a { color: var(--accent); text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; border-radius: 3px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+img { display: block; max-width: 100%; }
+
+.wrap { max-width: var(--max); margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* placeholder text: amber so it is obvious what still needs real words */
+.ph { background: var(--todo-bg); color: var(--todo-ink); border-radius: 3px; padding: 1px 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+
+/* ---------- top button bar ---------- */
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--band); border-bottom: 1px solid rgba(63, 208, 240, .3); }
+.topbar .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; padding-block: 10px; }
+.see { color: var(--band-ink); font-weight: 800; font-size: 1.2rem; margin-right: 8px; }
+.navbtn { font: inherit; font-weight: 700; font-size: .98rem; line-height: 1.2; color: var(--band-ink); background: transparent; border: 2px solid var(--cyan);
+  border-radius: 8px; padding: 8px 16px; text-decoration: none; cursor: pointer; display: inline-flex; align-items: center; gap: 9px; }
+.navbtn:hover { background: rgba(63, 208, 240, .18); color: var(--band-ink); }
+.navbtn[aria-expanded="true"] { background: var(--cyan); color: #06111d; }
+.caret { width: .5em; height: .5em; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translate(-2px, -2px); }
+.navbtn.li { margin-left: auto; background: var(--cyan); color: #06111d; }
+.navbtn.li:hover { background: #8be3f7; color: #06111d; }
+.dd { position: relative; }
+.menu { position: absolute; top: calc(100% + 6px); left: 0; z-index: 30; min-width: 16rem; margin: 0; padding: 6px; list-style: none;
+  background: var(--surface); border: 2px solid var(--line); border-radius: 10px; box-shadow: 0 12px 30px rgba(5, 14, 25, .3); }
+.menu a { display: block; padding: 10px 12px; border-radius: 6px; color: var(--ink); text-decoration: none; font-weight: 600; }
+.menu a:hover { background: var(--chip); }
+
+/* ---------- hero ---------- */
+.hero { background: var(--hero); color: var(--band-ink); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 28px 48px; padding-block: 44px 56px; align-items: start; }
+.name-row { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 40px; }
+.contact { display: grid; gap: 2px; font-size: .98rem; color: var(--band-soft); padding-bottom: 6px; }
+.contact .c-label { color: var(--cyan); font-weight: 700; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+.contact strong { color: var(--band-ink); user-select: all; font-weight: 600; }
+.contact a { color: var(--band-ink); text-underline-offset: 3px; }
+.hero h1 { font-size: clamp(2.5rem, 7vw, 4.2rem); line-height: 1.02; letter-spacing: -.03em; font-weight: 800; }
+.me { aspect-ratio: 3 / 4; max-width: 100%; border-radius: 10px; overflow: hidden; border: 2px solid var(--cyan); }
+.me img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 30%; }
+.about h2 { font-size: 1.5rem; margin-bottom: 12px; }
+.about p { margin: 0 0 16px; max-width: 40em; }
+.about .facts { color: var(--band-soft); font-size: 1rem; }
+.about .facts strong { color: var(--band-ink); }
+
+/* ---------- skills ---------- */
+.skills { background: var(--surface); border-bottom: 2px solid var(--line); }
+.skills .wrap { padding-block: 44px; }
+.skills h2 { font-size: 1.6rem; margin-bottom: 18px; }
+.skills dl { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 12px 28px; }
+.skills dt { font-weight: 700; color: var(--accent); }
+.skills dd { margin: 0; }
+
+/* ---------- groups and projects ---------- */
+.group { background: var(--group); color: #fff; scroll-margin-top: 59px; }
+.group .wrap { padding-block: 26px; }
+.group h2 { font-size: 2rem; letter-spacing: -.02em; }
+.group p { margin: 2px 0 0; color: #d3e1ff; }
+.project { padding-block: 52px; scroll-margin-top: 80px; }
+.project + .project, .group + .project { border-top: 0; }
+.project + .project { border-top: 2px solid var(--line); }
+.proj-head { display: grid; grid-template-columns: minmax(0, 330px) minmax(0, 1fr); gap: 20px 36px; align-items: start; }
+.proj-title { border: 2px solid var(--accent); border-radius: 10px; padding: 14px 20px; background: var(--surface); }
+.proj-title h2 { font-size: 1.55rem; line-height: 1.15; letter-spacing: -.01em; }
+.proj-title p { margin: 4px 0 0; color: var(--ink-soft); font-size: .95rem; }
+.intro { margin: 0; max-width: 42em; }
+.project h3 { font-size: 1.15rem; margin: 32px 0 10px; }
+.skill-flat { margin: 0; }
+.sub-head { margin-top: 36px; padding: 14px 20px; border-left: 4px solid var(--cyan); background: var(--surface); border-radius: 0 10px 10px 0; }
+.sub-head h3 { margin: 0 0 6px; font-size: 1.25rem; }
+.sub-head + h3 { margin-top: 24px; }
+
+/* ---------- numbered photo row ---------- */
+.hint { margin: 28px 0 8px; color: var(--ink-soft); font-size: .9rem; }
+.row-scroll { padding: 6px 7px 10px; }
+.photo-row { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; justify-content: start;
+  grid-template-columns: repeat(var(--cols), minmax(0, 220px)); }
+.photo-row li { position: relative; }
+.thumb { display: block; width: 100%; aspect-ratio: 1; padding: 0; border: 2px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--chip); cursor: zoom-in; }
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb.contain img { object-fit: contain; background: var(--chip); }
+.thumb:hover { border-color: var(--accent); }
+.thumb:hover img { transform: scale(1.04); }
+.thumb img { transition: transform .2s ease; }
+@media (prefers-reduced-motion: reduce) { .thumb img { transition: none; } .thumb:hover img { transform: none; } }
+.zoom { position: absolute; right: 6px; bottom: 6px; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(6, 17, 29, .72); color: #fff; pointer-events: none; }
+.thumb { position: relative; }
+.play { position: absolute; inset: 0; margin: auto; width: 44px; height: 44px; border-radius: 50%; background: rgba(6, 17, 29, .72); border: 2px solid #fff; }
+.play::after { content: ""; position: absolute; left: 17px; top: 11px; border-style: solid; border-width: 9px 0 9px 15px; border-color: transparent transparent transparent #fff; }
+.badge { position: absolute; top: -7px; left: -7px; z-index: 2; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--accent); color: #fff; font-weight: 800; font-size: .9rem; border: 2px solid var(--bg); pointer-events: none; }
+.caps { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; }
+.caps li { display: grid; grid-template-columns: 2.4em minmax(0, 1fr); gap: 4px; max-width: 52em; }
+.caps .n { font-weight: 800; color: var(--accent); }
+.caps b { font-weight: 700; }
+.did { margin: 0; padding-left: 1.2em; max-width: 52em; }
+.did li { margin: 8px 0; }
+.totop { display: inline-block; margin-top: 28px; font-weight: 600; }
+
+
+/* ---------- photo viewer ---------- */
+dialog.viewer { border: 0; padding: 0; border-radius: 12px; background: var(--band); color: var(--band-ink); width: min(96vw, 1100px); max-width: none; }
+dialog.viewer::backdrop { background: rgba(3, 9, 16, .85); }
+.v-inner { padding: 14px; position: relative; }
+.v-x { position: absolute; top: 22px; right: 22px; z-index: 3; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; cursor: pointer;
+  background: rgba(6, 17, 29, .88); color: #fff; border: 2px solid #fff; padding: 0; }
+.v-x:hover { background: #fff; color: #06111d; }
+.v-frame { display: grid; place-items: center; min-height: 160px; border-radius: 8px; background: #000; padding: 8px; }
+.v-frame video { width: 100%; max-height: 72vh; border-radius: 4px; }
+.sub-head .dates { margin: 0 0 8px; color: var(--ink-soft); font-size: .95rem; }
+.sub-head + .sub-head, .caps + .sub-head { margin-top: 56px; }
+.v-inner img { width: auto; height: auto; max-width: 100%; max-height: 72vh; object-fit: contain; }
+.v-cap { margin: 12px 4px 10px; color: #d7e6f3; }
+.v-cap b { color: #fff; }
+.v-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.v-bar button { font: inherit; font-weight: 700; color: var(--cyan); background: transparent; border: 2px solid var(--cyan); border-radius: 8px; padding: 7px 16px; cursor: pointer; }
+.v-bar button:hover { background: rgba(63, 208, 240, .18); color: #fff; }
+.v-count { color: var(--band-soft); }
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  .topbar { position: static; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 32px 40px; }
+  .photo-row { gap: 8px; grid-template-columns: repeat(var(--colsm), minmax(0, 220px)); }
+  .badge { width: 22px; height: 22px; font-size: .75rem; top: -6px; left: -6px; }
+  .zoom { width: 20px; height: 20px; right: 3px; bottom: 3px; }
+  .zoom svg { width: 12px; height: 12px; }
+  .play { width: 30px; height: 30px; }
+  .play::after { left: 11px; top: 6px; border-width: 7px 0 7px 11px; }
+  .me { aspect-ratio: 4 / 3; max-width: 360px; }
+  .proj-head { grid-template-columns: minmax(0, 1fr); }
+  .skills dl { grid-template-columns: minmax(0, 1fr); gap: 2px 0; }
+  .skills dd { margin-bottom: 12px; }
+  .project { padding-block: 40px; scroll-margin-top: 16px; }
+  .group { scroll-margin-top: 0; }
+}
+</style>
+</head>
+<body>
+<div id="top"></div>
+<header class="topbar">
+  <div class="wrap">
+    <span class="see">See my work!</span>
+    <a class="navbtn" href="#vuv">VUV Spectrometer (HSX)</a>
+    <a class="navbtn" href="#pegasus">Pegasus III</a>
+    <a class="navbtn" href="#axe">AXE</a>
+    <a class="navbtn" href="#personal">Personal Projects</a>
+    <a class="navbtn li" href="https://www.linkedin.com/in/caleb-jatczak-99775b313" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="name">
+    <div class="wrap">
+      <div class="name-row">
+        <h1 id="name">Caleb Jatczak</h1>
+        <div class="contact" aria-label="Contact">
+          <span class="c-label">Get in touch</span>
+          <span class="c-line">Email: <strong>calebjatczak@gmail.com</strong></span>
+          <a class="c-line" href="https://www.linkedin.com/in/caleb-jatczak-99775b313" target="_blank" rel="noopener">LinkedIn: linkedin.com/in/caleb-jatczak-99775b313</a>
+        </div>
+      </div>
+      <div class="me"><img src="images/me.jpg" alt="Caleb Jatczak"></div>
+      <div class="about">
+        <h2>About me</h2>
+        <p id="about-text"></p>
+        <p class="facts"><strong>B.S. Nuclear Engineering</strong> (Fusion Plasmas Focus Area), University of Wisconsin&ndash;Madison, expected December 2028. Certificates in progress: Physics and Nuclear Engineering Materials.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="skills" aria-labelledby="skills-h">
+    <div class="wrap">
+      <h2 id="skills-h">Skills built</h2>
+      <dl id="skills-list"></dl>
+    </div>
+  </section>
+
+  <div id="projects"></div>
+</main>
+
+
+
+<dialog class="viewer" id="viewer" aria-label="Photo viewer">
+  <div class="v-inner">
+    <button type="button" class="v-x" id="v-close" aria-label="Close"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    <div class="v-frame"><img id="v-img" alt=""><video id="v-vid" controls playsinline preload="metadata" hidden></video></div>
+    <p class="v-cap" id="v-cap"></p>
+    <div class="v-bar">
+      <button type="button" id="v-prev">Previous</button>
+      <span class="v-count" id="v-count"></span>
+      <button type="button" id="v-next">Next</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  var PH = "Placeholder text goes here.";
+  function ph(n) { return '<span class="ph">' + new Array(n + 1).join(PH + " ").trim() + "</span>"; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  var SKILLS = [
+    ["Software", ["Python", "SolidWorks"]],
+    ["Vacuum", ["UHV system designing and assembly", "UHV cleaning (ultrasonic bath and baking oven)", "Helium leak checking", "Pneumatic fittings"]],
+    ["Electrical", ["Electrical connections", "Multimeter-based troubleshooting and high-voltage measurement"]],
+    ["Fabrication", ["General shop tools", "Mill and lathe fabrication", "CNC mill", "Laser and plasma cutting", "3D printing"]],
+    ["Safety", ["Gas cylinder safety", "Laser safety"]]
+  ];
+
+  // Photos are numbered in the order of the numbered files in each project folder.
+  // cap: Caleb's caption text from that folder's caption file; null shows a placeholder.
+  function P(f, cap, contain, vid) { return { f: "images/" + f, cap: cap, c: !!contain, v: vid ? "images/" + vid : null }; }
+  var GAP = "{{gap}}";
+  var PROJECTS = [
+    {
+      id: "vuv", title: "VUV Spectrometer Project", sub: "HSX", dates: "October 2025 to Present",
+      intro: "My job so far on the VUV spectrometer project has been to get the vacuum system, vessel and mount built and running so the spectrometer can operate on HSX. That has covered planning the layout, designing and building the vibration-isolated stand, cleaning and leak checking components, restoring and testing the ion pump, getting up to speed on the control hardware, aligning the toroidal diffraction grating with lasers, and setting up a relay system that closes the isolation valve, shuts off the high-voltage supply and turns off the ion gauge on power loss or high pressure, then bringing everything down to vacuum. The system now runs independently at 2\u00d710\u207b\u2078 Torr, and the only major piece left now is the data collection and analysis program.",
+      blocks: [{
+        photos: [
+          P("vuv-01.jpg", "The newly acquired spectrometer vessel on the optical table before beginning the laser alignment process."),
+          P("vuv-02.jpg", "Planning the floor area beside HSX where the spectrometer vessel and stand would go."),
+          P("vuv-03.png", "SolidWorks model of the vibration-isolated pumping and mounting stand, before ordering materials and fabricating.", true),
+          P("vuv-04.jpg", "Completed fabrication and assembly, with the ion gauge controller and turbo controller installed."),
+          P("vuv-05.jpg", "Photo taken after the initial examination of the ion pump, which was found on a loading dock."),
+          P("vuv-06.jpg", "Leak checking the ion pump."),
+          P("vuv-07.jpg", "Taped-off safe work area for bringing the ion pump up to voltage gradually."),
+          P("vuv-08.jpg", "Measuring the ion pump high-voltage supply with a multimeter and a 1000:1 voltage divider."),
+          P("vuv-09.jpg", "The stand attached to HSX, with the turbo pump connected to the angled valve and a tube running out of the frame to a scroll pump, which brings the system down to 1\u00d710\u207b\u2075 Torr, where the ion pump can begin to take over."),
+          P("vuv-10.jpg", "Hidden mount for the high-voltage power supply."),
+          P("vuv-11.png", "Relay system diagram: closes the isolation valve, shuts off the high-voltage supply, and turns off the ion gauge in the event of power loss or high pressure.", true),
+          P("vuv-12.jpg", "Current top view of the VUV spectrometer and stand."),
+          P("vuv-13.jpg", "Current side view of the VUV spectrometer and stand.")
+        ]
+      }],
+      did: [
+        "Helium leak-checked and cleaned UHV components, including bellows, ceramic breaks, valves, and the spectrometer vessel, using ultrasonic baths, Oakite 33 [phosphoric acid], acetone, and ethanol procedures, then programmed a vacuum oven to bake and cool them autonomously over a weekend before venting to nitrogen and assembling.",
+        "Built a test pumping stand (turbomolecular and scroll pumps) to restore a neglected ion pump, baking it for 1 week with heater tape and insulation blankets; then, in a taped-off safe work area, gradually increased ion pump voltage over an additional week to protect against arcing while collecting current and voltage data until the pump was fully operational.",
+        "Designed, budgeted, and fabricated a vibration-isolated pumping and mounting stand with a 5-degree-of-freedom (5-DOF) spectrometer mount, using laser cutting, 3D printing, milling, and shop tools.",
+        "Ran a compressed-air line to actuate the gate-style isolation valve between HSX and the spectrometer vessel.",
+        "Programmed a Granville-Phillips 358 Micro-Ion controller to switch the ion pump power supply and isolation valve solenoid based on vessel pressure; also designed custom 3D-printed enclosures for the flyback diode and 24 V solenoid supply.",
+        "Commissioned the full system: coordinated with researchers and staff to safely lift the spectrometer vessel, which is currently connected to HSX through the isolation valve and operating independently at 2×10⁻⁸ Torr, ready for data collection."
+      ]
+    },
+    {
+      id: "pegasus", title: "Axisymmetric Plasma Device", sub: "Pegasus III", dates: "May 2025 to September 2025",
+      intro: "The goal was to build a linear plasma device that conditions away cathode spots on the Pegasus III local helicity injectors before they are commissioned in the vessel, saving roughly two weeks of in-vessel conditioning before useful data can be taken, on every injector cycle. My job was to develop the layout, design an adjustable system that centers the magnets and spaces them apart under magnetic loads above 500 lbs depending on the configuration, and design a feedthrough that allows quick switching between injectors without compromising their newly conditioned surfaces.",
+      blocks: [{
+        photos: [
+          P("pegasus-01.jpg", "Schematic I drew to propose the experimental layout at the weekly project meeting.", true),
+          P("pegasus-02.png", "Excel model of the buckling and yielding forces on the magnet spacing rods, used to select the rod material and size.", true),
+          P("pegasus-03.jpg", "The magnet system with the centering shims and spacing-rod assembly in place."),
+          P("pegasus-04.png", "Proposed local helicity injector feedthrough, view 1.", true),
+          P("pegasus-05.png", "Proposed local helicity injector feedthrough, view 2.", true),
+          P("pegasus-06.jpg", "Current view of the full axisymmetric plasma device.")
+        ]
+      }],
+      did: [
+        "Planned and assembled the UHV vessel for an Axisymmetric Plasma Device after vacuum cleaning salvaged components.",
+        "Prototyped, fabricated, and simulated a mounting system for vessels and magnets to ensure safety and adjustability.",
+        "Designed an electrically isolated, swappable, vacuum feedthrough for the conditioning of Pegasus’ local helicity injectors."
+      ]
+    },
+    {
+      id: "axe", title: "AXE", sub: "SolidWorks Assembly Project", dates: "February 2025 to August 2025",
+      intro: "The AXisymmetric Experiment (AXE) SolidWorks assembly project. My job was to take measurements of the plasma vessel, magnet positions, and diagnostics and convert the data into a SolidWorks assembly that can be used to plan upgrades and run simulations.",
+      blocks: [{
+        photos: [
+          P("axe-01.jpg", "The AXisymmetric Experiment (AXE): A linear plasma device that uses an RF antenna to heat plasma and confine it in a plasma 'bottle' with axisymmetric magnetic coils."),
+          P("axe-02.png", "The Python program: This would take the depth [D] of the caliper and the measurement, and convert the value into useful diameter and radius measurements.", true),
+          P("axe-03.png", "An example of an input and output.", true),
+          P("axe-04.jpg", "The final product: a fully constrained SolidWorks assembly and representation of AXE based on measurements taken by hand, and general knowledge of UHV components.", true)
+        ]
+      }],
+      did: [
+        "Developed a Python tool to convert, store, and translate caliper chord measurements to useful diameters and radii.",
+        "Used SolidWorks to create an accurate reference assembly for upgrades and simulations."
+      ]
+    },
+    {
+      id: "personal", title: "Personal Projects", sub: "", dates: "", intro: false,
+      blocks: [
+        {
+          heading: "E-Skateboard Deck",
+          intro: "The deck on my electric skateboard snapped in half while I was riding it after many years of use, so I found a 9-ply maple deck, drilled the hole patterns for mounting the enclosures, and routed channels to run the main battery wires through the deck to the electronic speed controller (ESC). By that point I had already upgraded or replaced every other part on it, so I dubbed it the Skateboard of Theseus, in reference to the classic thought experiment about a ship with every one of its planks replaced.",
+          photos: [
+            P("skate-01.jpg", "The 9-ply maple board after routing."),
+            P("skate-video-poster.jpg", "The brand new maple deck with routed channels for the battery wires to reach the ESC.", false, "skate-video.mp4")
+          ]
+        },
+        {
+          heading: "IllumiBOTi Robotics Team",
+          dates: "November 2022 to July 2024",
+          intro: "In high school I was on the IllumiBOTi FIRST Robotics Team, and I served as team captain for two years. I taught myself the Java we needed for field-oriented control, PID control and swerve drive, wrote closed-loop autonomous modes, and helped design a robot built to be sturdy, modular and quick to repair. I also spoke for the team at competitions and sponsor events to help raise funding. It was a lot of fun, and we picked up a few awards along the way, including the 2024 Excellence in Engineering Award, three Imagery Awards, and a 2023 FIRST Dean’s List semifinalist nomination for me.",
+          link: { href: "https://www.youtube.com/watch?v=FFohJbXVl8E", text: "Check out our robot release video" },
+          photos: [
+            P("robot-01.jpg", "The completed robot for the 2023–2024 season."),
+            P("robot-02.jpg", "The control system, folded completely into a box for a dramatic transport."),
+            P("robot-video-poster.jpg", "A fully autonomous, field-oriented scoring program that I made.", false, "robot-video.mp4")
+          ]
+        },
+        {
+          heading: "Laney BC 75",
+          intro: "I found a Laney BC 75 amplifier from 1994, which the owner had stated was completely out of order, and sold it to me at a discounted rate. After removing the amplification stage and comparing it with electrical diagrams of similar amplification circuits from that time, I was able to track down where the signal was lost. The culprit was a corroded send-port contactor, which assumed that the send stage was always connected and not receiving any signal. This muted the speaker and made the previous owner think it was broken for over 10 years. Now it has a new life, and I hope to use it for a gig in the future.",
+          photos: [
+            P("laney-01.jpg", "The Laney BC 75 with its amplification stage removed from the cabinet."),
+            P("laney-02.jpg", "The faulty send and return jacks."),
+            P("laney-03.jpg", "The looper with a line-level recording for tracing the signal path."),
+            P("laney-04.jpg", "The BC 75 in my practice rig.")
+          ]
+        }
+      ],
+      did: []
+    }
+  ];
+
+  // caption text: Caleb's words; the part before the first colon is set in bold
+  function capHTML(t) {
+    if (t === null) return ph(2);
+    if (t.indexOf("PENDING:") === 0) return esc(t.slice(8)) + ' <span class="ph">Photo to come</span>';
+    var h = esc(t).replace(GAP, '<span class="ph">[missing word]</span>');
+    var i = h.indexOf(":");
+    return i > 0 && i < 60 ? "<b>" + h.slice(0, i + 1) + "</b>" + h.slice(i + 1) : h;
+  }
+
+  // ----- home -----
+  document.getElementById("about-text").textContent = "I\u2019m an undergraduate studying Nuclear Engineering at UW Madison with a focus in Fusion Plasmas. I enjoy doing research, working hands-on with fusion and plasma experiments, and meeting new people. Outside of the lab, I love exploring new music, playing guitar, bass, and running. I take a lot of pride in my work and care about doing it well; doing a quality job is what makes me happy.";
+  document.getElementById("skills-list").innerHTML = SKILLS.map(function (g) {
+    return "<dt>" + esc(g[0]) + "</dt><dd>" + g[1].map(esc).join(", ") + "</dd>";
+  }).join("");
+
+  // ----- projects -----
+  // never more than 6 photos in a row and never more than 3 rows, so nothing scrolls
+  function colsFor(n) { var rows = n <= 5 ? 1 : n <= 12 ? 2 : 3; return Math.ceil(n / rows); }
+  function colsPhone(n) { return Math.max(2, Math.ceil(n / 3)); }
+  var html = "", ALL = {};
+  PROJECTS.forEach(function (p) {
+    if (p.group) {
+      html += '<div class="group" id="' + p.group.id + '"><div class="wrap"><h2>' + esc(p.group.title) + "</h2><p>" + esc(p.group.sub) + "</p></div></div>";
+    }
+    var intro = p.intro === false ? "" : '<p class="intro">' + (p.intro ? esc(p.intro) : ph(7)) + "</p>";
+    var body = p.blocks.map(function (b, bi) {
+      var key = p.id + "-" + bi; ALL[key] = b.photos;
+      var out = "";
+      if (b.heading) out += '<div class="sub-head"><h3>' + esc(b.heading) + "</h3>" + (b.dates ? '<p class="dates">' + esc(b.dates) + "</p>" : "") +
+        (b.intro ? '<p class="intro">' + esc(b.intro) + "</p>" : "") +
+        (b.link ? '<p class="intro"><a href="' + esc(b.link.href) + '" target="_blank" rel="noopener">' + esc(b.link.text) + "</a></p>" : "") + "</div>";
+      out += '<p class="hint">Select a photo to enlarge it.</p><div class="row-scroll"><ol class="photo-row" style="--cols:' + colsFor(b.photos.length) + ';--colsm:' + colsPhone(b.photos.length) + '" aria-label="Photos for ' + esc(b.heading || p.title) + '">' +
+        b.photos.map(function (x, i) {
+          return '<li><span class="badge" aria-hidden="true">' + (i + 1) + '</span><button type="button" class="thumb' + (x.c ? " contain" : "") +
+            '" data-k="' + key + '" data-i="' + i + '" aria-label="Open ' + (x.v ? "video " : "photo ") + (i + 1) + '"><img src="' + esc(x.f) + '" alt="' + esc((b.heading || p.title) + (x.v ? ", video " : ", photo ") + (i + 1)) + '" loading="lazy">' + (x.v ? '<span class="play" aria-hidden="true"></span>' : '<span class="zoom" aria-hidden="true"><svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="8.5" cy="8.5" r="5.5"/><path d="M13 13l5 5"/></svg></span>') + '</button></li>';
+        }).join("") + "</ol></div>";
+      var caps = b.photos.map(function (x, i) { return '<li><span class="n">[' + (i + 1) + "]</span><span>" + capHTML(x.cap) + "</span></li>"; });
+      (b.notes || []).forEach(function (t, j) { caps.push('<li><span class="n">[' + (b.photos.length + j + 1) + "]</span><span>" + capHTML(t) + "</span></li>"); });
+      out += '<ol class="caps">' + caps.join("") + "</ol>";
+      return out;
+    }).join("");
+    var did = p.did.map(function (d) { return "<li>" + (d.indexOf("PH:") === 0 ? ph(parseInt(d.slice(3), 10)) : esc(d)) + "</li>"; }).join("");
+    html += '<section class="project" id="' + p.id + '"><div class="wrap">' +
+      '<div class="proj-head"><div class="proj-title"><h2>' + esc(p.title) + "</h2>" +
+      (p.sub ? "<p>" + esc(p.sub) + "</p>" : "") + (p.dates ? "<p>" + esc(p.dates) + "</p>" : "") + "</div>" + intro + "</div>" +
+      body +
+      (p.did.length ? "<h3>What I did</h3><ul class=\"did\">" + did + "</ul>" : "") +
+      '<a class="totop" href="#top">Back to top</a></div></section>';
+  });
+  document.getElementById("projects").innerHTML = html;
+
+  // ----- photo viewer -----
+  var dlg = document.getElementById("viewer"), cur = [], idx = 0;
+  function show() {
+    var x = cur[idx], img = document.getElementById("v-img"), vid = document.getElementById("v-vid");
+    vid.pause();
+    if (x.v) {
+      img.hidden = true; vid.hidden = false; vid.poster = x.f; vid.src = x.v; vid.load();
+    } else {
+      vid.hidden = true; vid.removeAttribute("src"); vid.load(); img.hidden = false;
+      img.style.width = ""; img.onload = function () { if (img.naturalWidth < 700) img.style.width = Math.round(img.naturalWidth * 1.6) + "px"; };
+      img.src = x.f; img.alt = "Photo " + (idx + 1);
+    }
+    document.getElementById("v-cap").innerHTML = "<b>[" + (idx + 1) + "]</b> " + capHTML(x.cap);
+    document.getElementById("v-count").textContent = (idx + 1) + " of " + cur.length;
+    document.getElementById("v-prev").hidden = document.getElementById("v-next").hidden = cur.length < 2;
+  }
+  function step(d) { idx = (idx + d + cur.length) % cur.length; show(); }
+  document.getElementById("projects").addEventListener("click", function (e) {
+    var b = e.target.closest("button.thumb");
+    if (!b) return;
+    cur = ALL[b.getAttribute("data-k")];
+    idx = parseInt(b.getAttribute("data-i"), 10);
+    show();
+    dlg.showModal();
+  });
+  document.getElementById("v-prev").addEventListener("click", function () { step(-1); });
+  document.getElementById("v-next").addEventListener("click", function () { step(1); });
+  document.getElementById("v-close").addEventListener("click", function () { dlg.close(); });
+  dlg.addEventListener("close", function () { var v = document.getElementById("v-vid"); v.pause(); });
+  dlg.addEventListener("click", function (e) { if (e.target === dlg || !e.target.closest("button, img, video, .v-cap")) dlg.close(); });
+  dlg.addEventListener("keydown", function (e) { if (e.key === "ArrowLeft") step(-1); if (e.key === "ArrowRight") step(1); });
+
+  // land on the right section when the link has a #name
+  if (location.hash && document.getElementById(location.hash.slice(1))) {
+    document.getElementById(location.hash.slice(1)).scrollIntoView();
+  }
+})();
+</script>
+</body>
+</html>
